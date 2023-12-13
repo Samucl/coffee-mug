@@ -5,6 +5,7 @@ export const ButtonWrapper = styled(animated.div)`
   display: grid;
   place-items: center;
   position: absolute;
+  z-index: 1;
 `
 export const StyledButton = styled(animated.button)`
   border: 0;

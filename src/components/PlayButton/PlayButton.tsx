@@ -13,13 +13,11 @@ const PlayButton = ({ name, onClickHandler }: PlayButtonProps) => {
 
   const buttonDissapearAnimation = useSpring({
     transform: isClicked ? 'scale(0)' : 'scale(1)',
-    config: { mass: 1, tension: 140, friction: 10 },
-    onRest: (event: any) => {
-      onClickHandler(event);
-    },
+    config: { mass: 1, tension: 140, friction: 10 }
   });
 
-  const handleOnClick = () => {
+  const handleOnClick = (event: any) => {
+    onClickHandler(event);
     setisClicked(true)
   }
 

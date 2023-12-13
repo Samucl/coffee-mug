@@ -2,8 +2,9 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 
 export const KettleWrapper = styled(animated.div)`
-   transform: scale(1.6);
    position: absolute;
+   bottom: 250px;
+   z-index: 1;
 `
 export const KettleLid = styled(animated.div)`
     width: 280px;
