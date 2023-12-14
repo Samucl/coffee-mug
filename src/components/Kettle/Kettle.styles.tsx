@@ -47,8 +47,7 @@ export const KettleLidHandle = styled.div`
     width: 80px;
     border-radius: 10px;
   }
-`;
-
+`
 export const KettleHandle = styled.div`
     border: 30px solid lightgrey;
     width: 300px;
@@ -67,7 +66,6 @@ export const KettleSpout = styled(animated.div)`
     position: absolute;
     transform: rotate(70deg) translatey(40px);
 `
-
 export const Coffee = styled(animated.div)`
     width: 280px;
     height: 20px;
@@ -78,6 +76,3 @@ export const Coffee = styled(animated.div)`
     transform: rotate(180deg) translateX(184px) translateY(-25px);
     z-index: -1;
 `
-
-
-// transform: rotate(180deg) translateX(184px) translateY(-25px); end

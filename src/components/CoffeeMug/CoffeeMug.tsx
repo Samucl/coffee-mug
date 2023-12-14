@@ -6,24 +6,24 @@ type CoffeeMugProps = {
   isStarted: boolean
   setIsAppeared: any
   isPouring: boolean
+  setIsMugSlide: any
+  isMugSlide: boolean
 }
 
-const CoffeeMug = ({ isStarted, setIsAppeared, isPouring }: CoffeeMugProps) => {
-
-  const [isSlipped, setIsSlipped] = useState<boolean>(false);
+const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSlide }: CoffeeMugProps) => {
 
   const mugAppearAnimation = useSpring({
     left: isStarted ? '50%' : '0',
     opacity: isStarted ? '100%' : '0%',
     config: { tension: 40, friction: 10 },
     onRest: () => {
-      setIsSlipped(true);
+      setIsMugSlide(true);
     },
   });
 
   const mugZoomAnimation = useSpring({
-    transform: isSlipped ? 'scale(2) translateX(-25%)' : 'scale(1) translateX(-50%)',
-    bottom: isSlipped ? '2%' : '50%',
+    transform: isMugSlide ? 'scale(2) translateX(-25%)' : 'scale(1) translateX(-50%)',
+    bottom: isMugSlide ? '2%' : '50%',
     config: { mass: 1, tension: 50, friction: 10 },
     onRest: () => {
       setIsAppeared(true);
