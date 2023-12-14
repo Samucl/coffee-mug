@@ -21,6 +21,18 @@ const Logo = styled(Image)`
   cursor: pointer;
   filter: invert();
 `
+const MobileDiv = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+  background: #000000cf;
+  color: white;
+  font-size: 5vw;
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+`
 
 export default function Home() {
 
@@ -29,14 +41,27 @@ export default function Home() {
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [isPlayClicked, setIsPlayClicked] = useState<boolean>(false);
   const [isPouring, setIsPouring] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 770);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
     document.body.style.overflow = 'hidden';
 
     const sleep = setTimeout(() => {
       setIsStarted(true);
     }, 1000);
-    return () => clearTimeout(sleep);
+    return () => {
+      clearTimeout(sleep);
+      window.removeEventListener('resize', handleResize);
+    }
 
   }, []);
 
@@ -46,19 +71,20 @@ export default function Home() {
 
   return (
     <Background>
-      <Table isMugSlide={isMugSlide}/>
+      <Table isMugSlide={isMugSlide} />
       {isAppeared ? <PlayButton name="☕ Coffee time 👀" onClickHandler={handlePlayClick} /> : <></>}
       {isPlayClicked ? <Kettle setIsPouring={setIsPouring} /> : <></>}
-      <CoffeeMug 
+      <CoffeeMug
         isStarted={isStarted}
         setIsAppeared={setIsAppeared}
-        isPouring={isPouring} 
+        isPouring={isPouring}
         setIsMugSlide={setIsMugSlide}
         isMugSlide={isMugSlide}
       />
       <a href="https://github.com/Samucl/coffee-mug">
         <Logo src="/images/GitHub.png" alt="GitHub" width={30} height={30} />
       </a>
+      {isMobile && <MobileDiv><p>Please view on desktop😔🙏</p></MobileDiv>}
     </Background>
   )
 }
