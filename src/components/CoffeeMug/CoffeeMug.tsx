@@ -31,8 +31,8 @@ const CoffeeMug = ({ isStarted, setIsAppeared, isPouring }: CoffeeMugProps) => {
   });
 
   const coffeeRiseAnimation = useSpring({
-    transform: isPouring ? 'translateY(10px)' : 'translateY(85px)',
-    config: { mass: 4, tension: 50, friction: 80 },
+    transform: isPouring ? 'translateY(10px)' : 'translateY(87px)',
+    config: { mass: 4, tension: 30, friction: 70 },
   });
 
   return (

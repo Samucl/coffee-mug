@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
-    background: #e9ba81;
+    background: inherit;
     height: 100vh;
     width: 100vw;
     display: grid;
