@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { MugWrapper, MugTop, MugInside, MugBottom, MugCoffee, MugHandle } from './CoffeeMug.style';
 import { useSpring } from 'react-spring';
 
@@ -9,9 +8,10 @@ type CoffeeMugProps = {
   setIsMugSlide: any
   isMugSlide: boolean
   isHandMugDissapear: boolean
+  setIsResetAll: any
 }
 
-const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSlide, isHandMugDissapear }: CoffeeMugProps) => {
+const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSlide, isHandMugDissapear, setIsResetAll }: CoffeeMugProps) => {
 
   const mugAppearAnimation = useSpring({
     left: isStarted ? '50%' : '0',
@@ -35,6 +35,10 @@ const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSl
     transform: isHandMugDissapear ? 'scale(2) translateX(200%)' : 'scale(2) translateX(-25%)',
     opacity: isHandMugDissapear ? 0 : 1,
     config: { mass: 2, tension: 40, friction: 20 },
+    onRest: () => {
+      setIsResetAll(false);
+      window.location.reload();
+    }
   });
 
   const coffeeRiseAnimation = useSpring({

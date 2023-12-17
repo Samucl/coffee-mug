@@ -7,8 +7,9 @@ import styled from "styled-components";
 import Image from 'next/image'
 import { Table } from "@/components/Table";
 import Hand from "@/components/Hand/Hand";
+import { animated, useSpring } from "react-spring";
 
-const Background = styled.div`
+const Background = styled(animated.div)`
   background: inherit;
   height: 100vh;
   width: 100vw;
@@ -45,6 +46,11 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isHandAppear, setIsHandAppear] = useState<boolean>(false);
   const [isHandMugDissapear, setIsHandMugDissapear] = useState<boolean>(false);
+  const [isResetAll, setIsResetAll] = useState<boolean>(false);
+
+  const resetAnimation = useSpring({
+    opacity: isResetAll ? 1 : 0,
+  });
 
   useEffect(() => {
 
@@ -55,6 +61,8 @@ export default function Home() {
     handleResize();
 
     window.addEventListener('resize', handleResize);
+
+    setIsResetAll(true);
 
     document.body.style.overflow = 'hidden';
     const sleep = setTimeout(() => {
@@ -72,14 +80,14 @@ export default function Home() {
   }
 
   return (
-    <Background>
+    <Background style={{...resetAnimation}}>
       <Table isMugSlide={isMugSlide} />
       {isHandAppear ? <Hand
         isHandMugDissapear={isHandMugDissapear}
         setIsHandMugDissapear={setIsHandMugDissapear}
       /> : null}
       {isAppeared ? <PlayButton name="☕ Coffee time 👀" onClickHandler={handlePlayClick} /> : <></>}
-      {isPlayClicked ? <Kettle setIsPouring={setIsPouring} setIsHandAppear={setIsHandAppear} isHandMugDissapear={isHandMugDissapear} /> : <></>}
+      {isPlayClicked ? <Kettle setIsPouring={setIsPouring} setIsHandAppear={setIsHandAppear} /> : <></>}
       <CoffeeMug
         isStarted={isStarted}
         setIsAppeared={setIsAppeared}
@@ -87,6 +95,7 @@ export default function Home() {
         setIsMugSlide={setIsMugSlide}
         isMugSlide={isMugSlide}
         isHandMugDissapear={isHandMugDissapear}
+        setIsResetAll={setIsResetAll}
       />
       <a href="https://github.com/Samucl/coffee-mug">
         <Logo src="/images/GitHub.png" alt="GitHub" width={30} height={30} />

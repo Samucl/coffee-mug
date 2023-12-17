@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { animated } from 'react-spring';
 
 export const MugWrapper = styled(animated.div)`

@@ -5,14 +5,14 @@ import { useSpring } from "react-spring";
 type KettleProps = {
     setIsPouring: any
     setIsHandAppear: any
-    isHandMugDissapear: boolean
 }
 
-const Kettle = ({ setIsPouring, setIsHandAppear, isHandMugDissapear }: KettleProps) => {
+const Kettle = ({ setIsPouring, setIsHandAppear}: KettleProps) => {
 
     const [isAnimationStart, setIsAnimationStart] = useState<boolean>(false);
     const [isPouringStart, setIsPouringStart] = useState<boolean>(false);
     const [isReset, setIsReset] = useState<boolean>(false);
+    const [isKettleDissapear, setIsKettleDissapear] = useState<boolean>(false);
 
     useEffect(() => {
         const sleep = setTimeout(() => {
@@ -45,15 +45,17 @@ const Kettle = ({ setIsPouring, setIsHandAppear, isHandMugDissapear }: KettlePro
 
         config: { mass: 1, tension: 40, friction: 30 },
         onRest: () => {
-            if(!isPouringStart)
+            if(!isPouringStart){
                 setIsHandAppear(true);
+                setIsKettleDissapear(true);
+            }
             setIsPouringStart(false);
         },
     });
 
     const kettleDissapearAnimation = useSpring({
-        opacity: isHandMugDissapear ? 0 : 1,
-        transform: isHandMugDissapear ?
+        opacity: isKettleDissapear ? 0 : 1,
+        transform: isKettleDissapear ?
             'scale(1.6) rotate(-70deg) translate(260%, -50%)' :
             'scale(1.6) rotate(-70deg) translate(60%, 10%)',
 
@@ -87,7 +89,7 @@ const Kettle = ({ setIsPouring, setIsHandAppear, isHandMugDissapear }: KettlePro
 
         <div>
             {isReset ?
-                (isHandMugDissapear ? kettle(kettleDissapearAnimation) : kettle(kettlePouringAnimation))
+                (isKettleDissapear ? kettle(kettleDissapearAnimation) : kettle(kettlePouringAnimation))
                 :
                 kettle(kettleAppearAnimation)
             }

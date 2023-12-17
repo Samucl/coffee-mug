@@ -24,7 +24,9 @@ const Hand = ({isHandMugDissapear, setIsHandMugDissapear}: HandProps) => {
         config: { mass: 1, tension: 40, friction: 10 },
         onRest: () => {
             setIsHandOpen(false);
-            setIsHandMugDissapear(true);
+            setTimeout(() => {
+                setIsHandMugDissapear(true);
+              }, 1000);
         },
     });
 
