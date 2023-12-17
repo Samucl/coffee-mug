@@ -4,16 +4,17 @@ import { useSpring } from "react-spring";
 
 type KettleProps = {
     setIsPouring: any
+    setIsHandAppear: any
+    isHandMugDissapear: boolean
 }
 
-const Kettle = ({ setIsPouring }: KettleProps) => {
+const Kettle = ({ setIsPouring, setIsHandAppear, isHandMugDissapear }: KettleProps) => {
 
     const [isAnimationStart, setIsAnimationStart] = useState<boolean>(false);
     const [isPouringStart, setIsPouringStart] = useState<boolean>(false);
     const [isReset, setIsReset] = useState<boolean>(false);
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
         const sleep = setTimeout(() => {
             setIsAnimationStart(true);
         }, 1000);
@@ -44,8 +45,19 @@ const Kettle = ({ setIsPouring }: KettleProps) => {
 
         config: { mass: 1, tension: 40, friction: 30 },
         onRest: () => {
+            if(!isPouringStart)
+                setIsHandAppear(true);
             setIsPouringStart(false);
         },
+    });
+
+    const kettleDissapearAnimation = useSpring({
+        opacity: isHandMugDissapear ? 0 : 1,
+        transform: isHandMugDissapear ?
+            'scale(1.6) rotate(-70deg) translate(260%, -50%)' :
+            'scale(1.6) rotate(-70deg) translate(60%, 10%)',
+
+        config: { mass: 3, tension: 40, friction: 60 },
     });
 
     const coffeeFlowAnimation = useSpring({
@@ -75,7 +87,7 @@ const Kettle = ({ setIsPouring }: KettleProps) => {
 
         <div>
             {isReset ?
-                kettle(kettlePouringAnimation)
+                (isHandMugDissapear ? kettle(kettleDissapearAnimation) : kettle(kettlePouringAnimation))
                 :
                 kettle(kettleAppearAnimation)
             }

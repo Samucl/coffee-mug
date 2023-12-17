@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from 'next/image'
 import { Table } from "@/components/Table";
+import Hand from "@/components/Hand/Hand";
 
 const Background = styled.div`
   background: inherit;
@@ -31,7 +32,7 @@ const MobileDiv = styled.div`
   width: 100vw;
   display: grid;
   place-items: center;
-  z-index: 1;
+  z-index: 5;
 `
 
 export default function Home() {
@@ -41,7 +42,9 @@ export default function Home() {
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [isPlayClicked, setIsPlayClicked] = useState<boolean>(false);
   const [isPouring, setIsPouring] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isHandAppear, setIsHandAppear] = useState<boolean>(false);
+  const [isHandMugDissapear, setIsHandMugDissapear] = useState<boolean>(false);
 
   useEffect(() => {
 
@@ -54,7 +57,6 @@ export default function Home() {
     window.addEventListener('resize', handleResize);
 
     document.body.style.overflow = 'hidden';
-
     const sleep = setTimeout(() => {
       setIsStarted(true);
     }, 1000);
@@ -72,14 +74,19 @@ export default function Home() {
   return (
     <Background>
       <Table isMugSlide={isMugSlide} />
+      {isHandAppear ? <Hand
+        isHandMugDissapear={isHandMugDissapear}
+        setIsHandMugDissapear={setIsHandMugDissapear}
+      /> : null}
       {isAppeared ? <PlayButton name="☕ Coffee time 👀" onClickHandler={handlePlayClick} /> : <></>}
-      {isPlayClicked ? <Kettle setIsPouring={setIsPouring} /> : <></>}
+      {isPlayClicked ? <Kettle setIsPouring={setIsPouring} setIsHandAppear={setIsHandAppear} isHandMugDissapear={isHandMugDissapear} /> : <></>}
       <CoffeeMug
         isStarted={isStarted}
         setIsAppeared={setIsAppeared}
         isPouring={isPouring}
         setIsMugSlide={setIsMugSlide}
         isMugSlide={isMugSlide}
+        isHandMugDissapear={isHandMugDissapear}
       />
       <a href="https://github.com/Samucl/coffee-mug">
         <Logo src="/images/GitHub.png" alt="GitHub" width={30} height={30} />

@@ -6,6 +6,7 @@ export const MugWrapper = styled(animated.div)`
     place-items: center;
     position: absolute;
     height: 250px;
+    bottom: 2%;
 `
 export const MugTop = styled(animated.div)`
     background: white;

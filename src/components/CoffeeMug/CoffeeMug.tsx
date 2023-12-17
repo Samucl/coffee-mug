@@ -8,9 +8,10 @@ type CoffeeMugProps = {
   isPouring: boolean
   setIsMugSlide: any
   isMugSlide: boolean
+  isHandMugDissapear: boolean
 }
 
-const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSlide }: CoffeeMugProps) => {
+const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSlide, isHandMugDissapear }: CoffeeMugProps) => {
 
   const mugAppearAnimation = useSpring({
     left: isStarted ? '50%' : '0',
@@ -30,22 +31,36 @@ const CoffeeMug = ({ isStarted, setIsAppeared, isPouring, setIsMugSlide, isMugSl
     },
   });
 
+  const mugDissapearAnimation = useSpring({
+    transform: isHandMugDissapear ? 'scale(2) translateX(200%)' : 'scale(2) translateX(-25%)',
+    opacity: isHandMugDissapear ? 0 : 1,
+    config: { mass: 2, tension: 40, friction: 20 },
+  });
+
   const coffeeRiseAnimation = useSpring({
     transform: isPouring ? 'translateY(10px)' : 'translateY(87px)',
     config: { mass: 4, tension: 30, friction: 70 },
   });
 
+  const coffeemug = (animation: any) => {
+    return (
+      <MugWrapper style={{ ...mugAppearAnimation, ...animation }}>
+        <MugTop>
+          <MugInside>
+            <MugCoffee style={{ ...coffeeRiseAnimation }} />
+          </MugInside>
+        </MugTop>
+        <MugBottom>
+        </MugBottom>
+        <MugHandle />
+      </MugWrapper>
+    );
+  }
+
   return (
-    <MugWrapper style={{...mugAppearAnimation, ...mugZoomAnimation}}>
-      <MugTop>
-        <MugInside>
-          <MugCoffee style={{...coffeeRiseAnimation}}/>
-        </MugInside>
-      </MugTop>
-      <MugBottom>
-      </MugBottom>
-      <MugHandle />
-    </MugWrapper>
+    <>
+    {isHandMugDissapear ? coffeemug(mugDissapearAnimation) : coffeemug(mugZoomAnimation)}
+    </>
   )
 };
 
